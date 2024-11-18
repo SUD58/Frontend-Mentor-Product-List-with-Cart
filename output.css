@@ -553,3 +553,12 @@ video {
 [hidden]:where(:not([hidden="until-found"])) {
   display: none;
 }
+
+.font-RedHat {
+  font-family: "Red Hat Text", sans-serif;
+}
+
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}

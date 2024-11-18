@@ -19,7 +19,7 @@ The designs were created to the following widths:
 - Rose 300: hsl(14, 25%, 72%)
 - Rose 400: hsl(7, 20%, 60%)
 - Rose 500: hsl(12, 20%, 44%)
-- Rose 900: hsl(14, 65%, 9%)
+- Rose 500: hsl(12, 20%, 44%)
 
 ## Typography
 
