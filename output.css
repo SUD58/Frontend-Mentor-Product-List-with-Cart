@@ -554,6 +554,176 @@ video {
   display: none;
 }
 
+.absolute {
+  position: absolute;
+}
+
+.relative {
+  position: relative;
+}
+
+.inset-0 {
+  inset: 0px;
+}
+
+.inset-x-0 {
+  left: 0px;
+  right: 0px;
+}
+
+.bottom-4 {
+  bottom: 1rem;
+}
+
+.bottom-2 {
+  bottom: 0.5rem;
+}
+
+.bottom-1 {
+  bottom: 0.25rem;
+}
+
+.bottom-0\.5 {
+  bottom: 0.125rem;
+}
+
+.bottom-0 {
+  bottom: 0px;
+}
+
+.-bottom-2 {
+  bottom: -0.5rem;
+}
+
+.-bottom-1\/2 {
+  bottom: -50%;
+}
+
+.-bottom-4 {
+  bottom: -1rem;
+}
+
+.-bottom-5 {
+  bottom: -1.25rem;
+}
+
+.left-1\/2 {
+  left: 50%;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
+.flex {
+  display: flex;
+}
+
+.w-fit {
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.w-2\/3 {
+  width: 66.666667%;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.gap-6 {
+  gap: 1.5rem;
+}
+
+.self-center {
+  align-self: center;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.rounded-xl {
+  border-radius: 0.75rem;
+}
+
+.rounded-3xl {
+  border-radius: 1.5rem;
+}
+
+.rounded-2xl {
+  border-radius: 1rem;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.border {
+  border-width: 1px;
+}
+
+.border-rose-900 {
+  --tw-border-opacity: 1;
+  border-color: rgb(136 19 55 / var(--tw-border-opacity, 1));
+}
+
+.border-Frontend-Rose-500 {
+  --tw-border-opacity: 1;
+  border-color: hsl(12 20% 44% / var(--tw-border-opacity, 1));
+}
+
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+}
+
+.bg-Frontend-Rose-50 {
+  --tw-bg-opacity: 1;
+  background-color: hsl(20 50% 98% / var(--tw-bg-opacity, 1));
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
+.p-2 {
+  padding: 0.5rem;
+}
+
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
 .font-RedHat {
   font-family: "Red Hat Text", sans-serif;
 }
@@ -561,4 +731,43 @@ video {
 .text-4xl {
   font-size: 2.25rem;
   line-height: 2.5rem;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.text-Frontend-Rose-300 {
+  --tw-text-opacity: 1;
+  color: hsl(14 25% 72% / var(--tw-text-opacity, 1));
+}
+
+.text-Frontend-Rose-400 {
+  --tw-text-opacity: 1;
+  color: hsl(7 20% 60% / var(--tw-text-opacity, 1));
+}
+
+.text-Frontend-Rose-500 {
+  --tw-text-opacity: 1;
+  color: hsl(12 20% 44% / var(--tw-text-opacity, 1));
+}
+
+.text-Frontend-Red {
+  --tw-text-opacity: 1;
+  color: hsl(14 86% 42% / var(--tw-text-opacity, 1));
 }

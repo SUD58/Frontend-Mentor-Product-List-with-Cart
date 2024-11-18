@@ -35,28 +35,47 @@
       }
     </style>
   </head>
-  <body class="font-RedHat">
-    <h1 class="text-4xl">Desserts</h1>
-    <div>
-      <div>
-        <img src="assets/images/image-waffle-mobile.jpg" alt="" />
-        <h3>Waffle with Berries</h3>
-        <h4>Waffle</h4>
-        <p>6.50</p>
-        <button>Add to Cart</button>
+  <body class="font-RedHat bg-Frontend-Rose-50 p-4">
+    <div class="flex flex-col gap-6">
+      <h1 class="text-4xl font-bold">Desserts</h1>
+      <div class="">
+        <div class="flex flex-col">
+          <div class="relative mb-8">
+            <img
+              src="assets/images/image-waffle-mobile.jpg"
+              alt=""
+              class="rounded-2xl"
+            />
+            <button
+              class="border-Frontend-Rose-500 absolute inset-x-0 -bottom-5 mx-auto flex w-fit gap-2 rounded-full border bg-white px-8 py-2"
+            >
+              <img src="assets/images/icon-add-to-cart.svg" alt="" />
+              <p class="font-bold">Add to Cart</p>
+            </button>
+          </div>
+          <h4 class="text-Frontend-Rose-300">Waffle</h4>
+          <h3 class="text-lg font-bold">Waffle with Berries</h3>
+          <p class="text-Frontend-Red font-bold">$6.50</p>
+        </div>
       </div>
-    </div>
-
-    <div>
-      <h2>Your Cart (<span></span>)</h2>
-      <img src="assets/images/illustration-empty-cart.svg" alt="" />
-      <p>Your added items will appear here</p>
-    </div>
-
-    <div class="attribution">
-      Challenge by
-      <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>.
-      Coded by <a href="#">Your Name Here</a>.
+      <div class="flex flex-col rounded-2xl bg-white p-4">
+        <h2 class="text-Frontend-Red text-3xl font-bold">
+          Your Cart (<span></span>)
+        </h2>
+        <img
+          src="assets/images/illustration-empty-cart.svg"
+          alt=""
+          class="w-2/3 self-center"
+        />
+        <p class="text-Frontend-Rose-500 self-center font-bold">
+          Your added items will appear here
+        </p>
+      </div>
+      <div class="attribution">
+        Challenge by
+        <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a
+        >. Coded by <a href="#">Your Name Here</a>.
+      </div>
     </div>
   </body>
 </html>
