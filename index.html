@@ -14,7 +14,7 @@
 
     <title>Frontend Mentor | Product list with cart</title>
     <link rel="stylesheet" href="output.css" />
-    <script src="script.js" defer></script>
+    <script src="script.js" type="module" defer></script>
 
     <!-- Include font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -43,10 +43,7 @@
       fill="none"
       viewBox="0 0 10 10"
     >
-      <symbol
-        id="increment-icon""
-        viewBox="0 0 10 10"
-      >
+      <symbol id="increment-icon" viewBox="0 0 10 10">
         <path
           fill="#fff"
           d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z"
@@ -69,51 +66,21 @@
     class="flex flex-col gap-4 bg-Frontend-Rose-50 p-4 font-RedHat lg:p-12 xl:p-16"
   >
     <div class="grid gap-6 lg:grid-cols-4">
-      <div class="grid auto-rows-auto grid-cols-subgrid gap-4 lg:col-span-3">
+      <ul
+        id="items-list"
+        class="grid auto-rows-auto grid-cols-subgrid gap-4 lg:col-span-3"
+      >
         <h1 class="col-span-full row-span-1 text-4xl font-bold">Desserts</h1>
-        <div class="flex flex-col">
-          <div class="relative mb-8">
-            <img
-              src="assets/images/image-waffle-mobile.jpg"
-              alt=""
-              class="rounded-2xl"
-            />
-            <div
-              class="absolute inset-x-0 -bottom-5 z-10 mx-auto hidden w-fit justify-between gap-14 rounded-full bg-Frontend-Red px-2 py-2 text-white"
-            >
-              <button
-                class="aspect-square group flex justify-center items-center rounded-full border p-2 hover:bg-white"
-              >
-                <svg class="aspect-square w-4 group-hover:stroke-Frontend-Red">
-                  <use href="#decrement-icon"></use>
-                </svg>
-              </button>
-              <p class="font-bold">1</p>
-              <button
-                class="aspect-square group flex justify-center items-center rounded-full border p-2 hover:bg-white"
-              >
-                <svg class="aspect-square w-4 group-hover:stroke-Frontend-Red">
-                  <use href="#increment-icon"></use>
-                </svg>
-              </button>
-            </div>
-            <button
-              class="group absolute inset-x-0 -bottom-5 mx-auto flex w-fit gap-2 rounded-full border border-Frontend-Rose-500 bg-white px-8 py-2 hover:border-Frontend-Red"
-            >
-              <img src="assets/images/icon-add-to-cart.svg" alt="" />
-              <p class="font-bold group-hover:text-Frontend-Red">Add to Cart</p>
-            </button>
-          </div>
-          <h4 class="text-Frontend-Rose-300">Waffle</h4>
-          <h3 class="text-lg font-bold">Waffle with Berries</h3>
-          <p class="font-bold text-Frontend-Red">$6.50</p>
-        </div>
-      </div>
-      <div class="flex flex-col gap-2 rounded-2xl bg-white p-10">
+        <!-- Items inserted here -->
+      </ul>
+      <div
+        id="cart"
+        class="flex h-fit flex-col gap-2 rounded-2xl bg-white p-10"
+      >
         <h2
           class="text-3xl font-bold text-Frontend-Red lg:text-2xl xl:text-3xl"
         >
-          Your Cart (<span></span>)
+          Your Cart (<span id="cart-number"></span>)
         </h2>
         <div id="cart-selected" class="hidden flex-col gap-6">
           <div
