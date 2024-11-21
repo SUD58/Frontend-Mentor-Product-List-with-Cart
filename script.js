@@ -7,9 +7,11 @@ cartNumber.textContent = 0;
 fetch("./data.json")
   .then((response) => response.json())
   .then((data) => {
+    console.log(data);
+
     const itemsTemplate = html`
       ${data.map(
-        (item) =>
+        (item, index) =>
           html`<li class="flex flex-col">
             <div class="relative mb-8">
               <img src="${item.image.mobile}" alt="" class="rounded-2xl" />
@@ -37,8 +39,11 @@ fetch("./data.json")
     addToCartButtons.forEach((button) => {
       button.addEventListener("click", (event) => {
         cartNumber.textContent++;
-        addedToCartButtonTemplate = html` <div
-          class="absolute inset-x-0 -bottom-5 mx-auto flex w-fit justify-between gap-14 rounded-full bg-Frontend-Red p-2 text-white"
+        const buttonDiv = button.parentNode;
+        const numberOfItem = 1;
+        button.remove();
+        const addedToCartButtonTemplate = html` <div
+          class="absolute inset-x-0 -bottom-5 mx-auto flex w-fit items-center justify-between gap-14 rounded-full bg-Frontend-Red p-2 text-white"
         >
           <button
             class="group flex aspect-square items-center justify-center rounded-full border p-2 hover:bg-white"
@@ -47,7 +52,7 @@ fetch("./data.json")
               <use href="#decrement-icon"></use>
             </svg>
           </button>
-          <p class="font-bold">1</p>
+          <p class="text-xl font-bold">${numberOfItem}</p>
           <button
             class="group flex aspect-square items-center justify-center rounded-full border p-2 hover:bg-white"
           >
@@ -56,7 +61,8 @@ fetch("./data.json")
             </svg>
           </button>
         </div>`;
-        render(addedToCartButtonTemplate, itemsList);
+        render(addedToCartButtonTemplate, buttonDiv);
       });
     });
-  });
+  })
+  .catch((error) => console.error("Error loading data", error));
