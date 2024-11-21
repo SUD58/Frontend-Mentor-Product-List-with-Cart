@@ -1,4 +1,4 @@
-import { html, render } from "lit";
+import { html, render } from "lit-html";
 
 const itemsList = document.querySelector("#items-list");
 const cartNumber = document.querySelector("#cart-number");
@@ -43,12 +43,12 @@ fetch("./data.json")
         const numberOfItem = 1;
         button.remove();
         const addedToCartButtonTemplate = html` <div
-          class="absolute inset-x-0 -bottom-5 mx-auto flex w-fit items-center justify-between gap-14 rounded-full bg-Frontend-Red p-2 text-white"
+          class="absolute inset-x-0 -bottom-5 mx-auto flex w-fit items-center justify-between gap-14 rounded-full bg-Frontend-Red px-2 py-2 text-white"
         >
           <button
             class="group flex aspect-square items-center justify-center rounded-full border p-2 hover:bg-white"
           >
-            <svg class="aspect-square w-4 group-hover:stroke-Frontend-Red">
+            <svg class="aspect-square w-3 group-hover:stroke-Frontend-Red">
               <use href="#decrement-icon"></use>
             </svg>
           </button>
@@ -56,7 +56,7 @@ fetch("./data.json")
           <button
             class="group flex aspect-square items-center justify-center rounded-full border p-2 hover:bg-white"
           >
-            <svg class="aspect-square w-4 group-hover:stroke-Frontend-Red">
+            <svg class="aspect-square w-3 group-hover:stroke-Frontend-Red">
               <use href="#increment-icon"></use>
             </svg>
           </button>
@@ -64,5 +64,4 @@ fetch("./data.json")
         render(addedToCartButtonTemplate, buttonDiv);
       });
     });
-  })
-  .catch((error) => console.error("Error loading data", error));
+  });
