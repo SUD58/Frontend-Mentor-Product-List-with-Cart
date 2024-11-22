@@ -6,8 +6,6 @@ cartQuantitySpan.textContent = cartQuantity;
 fetch("./data.json")
   .then((response) => response.json())
   .then((data) => {
-    console.log(data);
-
     data.forEach((item) => {
       const itemsTemplate = `
       <li class="flex flex-col">
@@ -23,13 +21,13 @@ fetch("./data.json")
       </li>`;
       itemsList.insertAdjacentHTML("beforeend", itemsTemplate);
     });
+    attachAddToCartListeners();
   });
 
 function createAddToCartButton() {
   return `
     <button
       class="add-to-cart-button group absolute inset-x-0 -bottom-5 mx-auto flex w-fit gap-2 rounded-full border border-Frontend-Rose-500 bg-white px-8 py-2 hover:border-Frontend-Red"
-      onclick="addToCart(this)"
     >
       <img src="assets/images/icon-add-to-cart.svg" alt="" />
       <p class="font-bold group-hover:text-Frontend-Red">Add to Cart</p>
@@ -46,7 +44,7 @@ function addToCart(button) {
 
   let itemQuantity = 1;
 
-  buttonDiv.innerHTML = createQuantityControlDiv(1);
+  buttonDiv.innerHTML = createQuantityControlDiv(itemQuantity);
 }
 
 function createQuantityControlDiv(quantity) {
@@ -86,7 +84,18 @@ function decrementItem(addedToCartDiv, buttonDiv) {
   if (itemQuantity < 1) {
     addedToCartDiv.remove();
     buttonDiv.innerHTML = createAddToCartButton();
+    attachAddToCartListeners();
   } else {
     itemQuantityParagraph.textContent = itemQuantity;
   }
+}
+
+function attachAddToCartListeners() {
+  const addToCartButtons = document.querySelectorAll(".add-to-cart-button");
+
+  addToCartButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      addToCart(this);
+    });
+  });
 }
