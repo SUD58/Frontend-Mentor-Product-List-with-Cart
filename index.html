@@ -14,7 +14,7 @@
 
     <title>Frontend Mentor | Product list with cart</title>
     <script src="script.js" defer></script>
-    <link rel="stylesheet" href="output.css" />
+    <link rel="stylesheet" href="style.css" />
 
     <!-- Include font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,8 +26,8 @@
 
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="0"
-      height="0"
+      width="10"
+      height="2"
       fill="none"
       viewBox="0 0 10 2"
     >
@@ -38,8 +38,8 @@
 
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="0"
-      height="0"
+      width="10"
+      height="10"
       fill="none"
       viewBox="0 0 10 10"
     >
@@ -50,6 +50,17 @@
         />
       </symbol>
     </svg>
+
+    <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+    <style>
+      .attribution {
+        font-size: 11px;
+        text-align: center;
+      }
+      .attribution a {
+        color: hsl(228, 45%, 44%);
+      }
+    </style>
   </head>
   <body
     class="flex flex-col gap-4 bg-Frontend-Rose-50 p-4 font-RedHat lg:p-12 xl:p-16"
@@ -71,57 +82,59 @@
         >
           Your Cart (<span id="cart-number"></span>)
         </h2>
-        <div id="cart-selected" class="hidden flex-col gap-6">
-          <div
-            id="cart-items"
-            class="flex max-h-60 flex-col gap-4 overflow-auto text-sm"
-          >
+        <div id="cart-items-list">
+          <div id="cart-selected" class="hidden flex-col gap-6">
             <div
-              class="flex items-center justify-between border-b border-Frontend-Rose-100 pb-4"
+              id="cart-items"
+              class="flex max-h-60 flex-col gap-4 overflow-auto text-sm"
             >
-              <div class="flex flex-col gap-2">
-                <h4 class="font-bold">Classic Tiramisu</h4>
-                <div class="flex gap-2">
-                  <p class="font-bold text-Frontend-Red">1x</p>
-                  <p class="text-Frontend-Rose-400">@$5.50</p>
-                  <p class="font-bold text-Frontend-Rose-400">$5.50</p>
+              <div
+                class="flex items-center justify-between border-b border-Frontend-Rose-100 pb-4"
+              >
+                <div class="flex flex-col gap-2">
+                  <h4 class="font-bold">Classic Tiramisu</h4>
+                  <div class="flex gap-2">
+                    <p class="font-bold text-Frontend-Red">1x</p>
+                    <p class="text-Frontend-Rose-400">@$5.50</p>
+                    <p class="font-bold text-Frontend-Rose-400">$5.50</p>
+                  </div>
+                </div>
+                <div>
+                  <img
+                    src="assets/images/icon-remove-item.svg"
+                    alt=""
+                    class="rounded-full border border-Frontend-Rose-300 p-0.5"
+                  />
                 </div>
               </div>
-              <div>
-                <img
-                  src="assets/images/icon-remove-item.svg"
-                  alt=""
-                  class="rounded-full border border-Frontend-Rose-300 p-0.5"
-                />
-              </div>
             </div>
+            <div id="cart-total" class="flex items-center justify-between">
+              <p class="text-sm">Order total</p>
+              <h2 class="text-2xl font-bold">$46.50</h2>
+            </div>
+            <div
+              class="flex justify-center gap-2 rounded-xl bg-Frontend-Rose-100 p-4 text-sm"
+            >
+              <img src="assets/images/icon-carbon-neutral.svg" alt="" />
+              <p>
+                This is a
+                <span class="font-bold">carbon neutral</span> delivery
+              </p>
+            </div>
+            <button class="rounded-full bg-Frontend-Red py-4 text-white">
+              Confirm order
+            </button>
           </div>
-          <div id="cart-total" class="flex items-center justify-between">
-            <p class="text-sm">Order total</p>
-            <h2 class="text-2xl font-bold">$46.50</h2>
-          </div>
-          <div
-            class="flex justify-center gap-2 rounded-xl bg-Frontend-Rose-100 p-4 text-sm"
-          >
-            <img src="assets/images/icon-carbon-neutral.svg" alt="" />
-            <p>
-              This is a
-              <span class="font-bold">carbon neutral</span> delivery
+          <div id="cart-empty" class="flex grow flex-col justify-evenly">
+            <img
+              src="assets/images/illustration-empty-cart.svg"
+              alt=""
+              class="w-2/3 self-center"
+            />
+            <p class="text-center font-bold text-Frontend-Rose-500">
+              Your added items will appear here
             </p>
           </div>
-          <button class="rounded-full bg-Frontend-Red py-4 text-white">
-            Confirm order
-          </button>
-        </div>
-        <div id="cart-empty" class="flex grow flex-col justify-evenly">
-          <img
-            src="assets/images/illustration-empty-cart.svg"
-            alt=""
-            class="w-2/3 self-center"
-          />
-          <p class="text-center font-bold text-Frontend-Rose-500">
-            Your added items will appear here
-          </p>
         </div>
       </div>
     </div>

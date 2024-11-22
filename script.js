@@ -1,4 +1,5 @@
 const itemsList = document.querySelector("#items-list");
+const cartItemsList = document.querySelector("#cart-items-list");
 let cartQuantity = 0;
 const cartQuantitySpan = document.querySelector("#cart-number");
 cartQuantitySpan.textContent = cartQuantity;
@@ -35,16 +36,50 @@ function createAddToCartButton() {
   `;
 }
 
-function addToCart(button) {
-  cartQuantity++;
-  cartQuantitySpan.textContent = cartQuantity;
-
+function addToCart(button, index) {
   const buttonDiv = button.parentNode;
   button.remove();
 
   let itemQuantity = 1;
 
   buttonDiv.innerHTML = createQuantityControlDiv(itemQuantity);
+  fetch("./data.json")
+    .then((response) => response.json())
+    .then((data) => {
+      const cartItemsTemplate = `<div
+    class="flex max-h-60 flex-col gap-4 overflow-auto text-sm"
+    >
+    <div
+    class="flex items-center justify-between border-b border-Frontend-Rose-100 pb-4"
+    >
+    <div class="flex flex-col gap-2">
+    <h4 class="font-bold">${data[index].name}</h4>
+    <div class="flex gap-2">
+    <p class="font-bold text-Frontend-Red">${itemQuantity}</p>
+    <p class="text-Frontend-Rose-400">@$${data[index].price}</p>
+    <p class="font-bold text-Frontend-Rose-400">${itemQuantity * data[index].price}</p>
+    </div>
+    </div>
+    <div>
+    <img
+    src="assets/images/icon-remove-item.svg"
+    alt=""
+    class="rounded-full border border-Frontend-Rose-300 p-0.5"
+    />
+    </div>
+    </div>
+    </div>
+    `;
+      if (cartQuantity === 0) {
+        cartItemsList.innerHTML = cartItemsTemplate;
+        cartQuantity++;
+        cartQuantitySpan.textContent = cartQuantity;
+      } else {
+        cartItemsList.insertAdjacentHTML("beforeend", cartItemsTemplate);
+        cartQuantity++;
+        cartQuantitySpan.textContent = cartQuantity;
+      }
+    });
 }
 
 function createQuantityControlDiv(quantity) {
@@ -93,9 +128,9 @@ function decrementItem(addedToCartDiv, buttonDiv) {
 function attachAddToCartListeners() {
   const addToCartButtons = document.querySelectorAll(".add-to-cart-button");
 
-  addToCartButtons.forEach((button) => {
+  addToCartButtons.forEach((button, index) => {
     button.addEventListener("click", function () {
-      addToCart(this);
+      addToCart(this, index);
     });
   });
 }
