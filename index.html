@@ -33,7 +33,7 @@
       class="hidden"
     >
       <symbol id="decrement-icon" viewBox="0 0 10 2">
-        <path fill="#fff" d="M0 .375h10v1.25H0V.375Z" />
+        <path d="M0 .375h10v1.25H0V.375Z" />
       </symbol>
     </svg>
 
@@ -47,8 +47,22 @@
     >
       <symbol id="increment-icon" viewBox="0 0 10 10">
         <path
-          fill="#fff"
           d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z"
+        />
+      </symbol>
+    </svg>
+
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="10"
+      height="10"
+      fill="none"
+      viewBox="0 0 10 10"
+      class="hidden"
+    >
+      <symbol id="remove-item-icon" viewBox="0 0 10 10">
+        <path
+          d="M8.375 9.375 5 6 1.625 9.375l-1-1L4 5 .625 1.625l1-1L5 4 8.375.625l1 1L6 5l3.375 3.375-1 1Z"
         />
       </symbol>
     </svg>
@@ -84,35 +98,15 @@
         >
           Your Cart (<span id="cart-number"></span>)
         </h2>
-        <div id="cart-items-list" class="flex flex-col gap-6">
-          <div id="cart-selected" class="hidden flex-col gap-6">
+        <div class="flex flex-col gap-6">
+          <div id="cart-active" class="flex hidden flex-col gap-6">
             <div
               id="cart-items"
-              class="flex max-h-60 flex-col gap-4 overflow-auto text-sm"
-            >
-              <div
-                class="flex items-center justify-between border-b border-Frontend-Rose-100 pb-4"
-              >
-                <div class="flex flex-col gap-2">
-                  <h4 class="font-bold">Classic Tiramisu</h4>
-                  <div class="flex gap-2">
-                    <p class="font-bold text-Frontend-Red">1x</p>
-                    <p class="text-Frontend-Rose-400">@$5.50</p>
-                    <p class="font-bold text-Frontend-Rose-400">$5.50</p>
-                  </div>
-                </div>
-                <div>
-                  <img
-                    src="assets/images/icon-remove-item.svg"
-                    alt=""
-                    class="rounded-full border border-Frontend-Rose-300 p-0.5"
-                  />
-                </div>
-              </div>
-            </div>
+              class="flex max-h-60 flex-col gap-4 overflow-auto pr-3 text-sm"
+            ></div>
             <div id="cart-total" class="flex items-center justify-between">
               <p class="text-sm">Order total</p>
-              <h2 class="text-2xl font-bold">$46.50</h2>
+              <h2 id="total-price" class="text-2xl font-bold">$46.50</h2>
             </div>
             <div
               class="flex justify-center gap-2 rounded-xl bg-Frontend-Rose-100 p-4 text-sm"
@@ -127,7 +121,7 @@
               Confirm order
             </button>
           </div>
-          <div id="cart-empty" class="flex grow flex-col justify-evenly">
+          <div id="cart-inactive" class="flex grow flex-col justify-evenly">
             <img
               src="assets/images/illustration-empty-cart.svg"
               alt=""
