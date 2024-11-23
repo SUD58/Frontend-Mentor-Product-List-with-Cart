@@ -3,27 +3,42 @@ const cartItemsList = document.querySelector("#cart-items-list");
 let cartQuantity = 0;
 const cartQuantitySpan = document.querySelector("#cart-number");
 cartQuantitySpan.textContent = cartQuantity;
+const items = [];
 
 fetch("./data.json")
   .then((response) => response.json())
   .then((data) => {
-    data.forEach((item) => {
-      const itemsTemplate = `
-      <li class="flex flex-col">
-        <div class="relative mb-8">
-          <img src="${item.image.mobile}" alt="" class="rounded-2xl" />
-          <div class="button-div">
-            ${createAddToCartButton()}
-          </div>
-        </div>
-        <h4 class="text-Frontend-Rose-300">${item.category}</h4>
-        <h3 class="text-lg font-bold">${item.name}</h3>
-        <p class="font-bold text-Frontend-Red">$${item.price.toFixed(2)}</p>
-      </li>`;
-      itemsList.insertAdjacentHTML("beforeend", itemsTemplate);
-    });
-    attachAddToCartListeners();
+    items.push(...data);
+    createItemsList();
   });
+
+console.log(items);
+
+function createItemsList() {
+  items.forEach((item) => {
+    console.log(item);
+
+    const itemsTemplate = `
+    <li class="flex flex-col">
+      <div class="relative mb-8">
+        <picture class="rounded-2xl">
+          <source srcset="${item.image.mobile}">
+          <source srcset="${item.image.tablet}" media="(min-width: 1024px)">
+          <source srcset="${item.image.desktop}" media="(min-width: 1280px)">
+          <img src="${item.image.thumbnail}" class="rounded-2xl">
+        </picture>
+        <div class="button-div">
+          ${createAddToCartButton()}
+        </div>
+      </div>
+      <h4 class="text-Frontend-Rose-300">${item.category}</h4>
+      <h3 class="text-lg font-bold">${item.name}</h3>
+      <p class="font-bold text-Frontend-Red">$${item.price.toFixed(2)}</p>
+    </li>`;
+    itemsList.insertAdjacentHTML("beforeend", itemsTemplate);
+  });
+  attachAddToCartListeners();
+}
 
 function createAddToCartButton() {
   return `
@@ -43,43 +58,41 @@ function addToCart(button, index) {
   let itemQuantity = 1;
 
   buttonDiv.innerHTML = createQuantityControlDiv(itemQuantity);
-  fetch("./data.json")
-    .then((response) => response.json())
-    .then((data) => {
-      const cartItemsTemplate = `<div
-    class="flex max-h-60 flex-col gap-4 overflow-auto text-sm"
-    >
+
+  const cartItemsTemplate = `
     <div
-    class="flex items-center justify-between border-b border-Frontend-Rose-100 pb-4"
+      class="flex max-h-60 flex-col gap-4 overflow-auto text-sm"
     >
-    <div class="flex flex-col gap-2">
-    <h4 class="font-bold">${data[index].name}</h4>
-    <div class="flex gap-2">
-    <p class="font-bold text-Frontend-Red">${itemQuantity}</p>
-    <p class="text-Frontend-Rose-400">@$${data[index].price}</p>
-    <p class="font-bold text-Frontend-Rose-400">${itemQuantity * data[index].price}</p>
-    </div>
-    </div>
-    <div>
-    <img
-    src="assets/images/icon-remove-item.svg"
-    alt=""
-    class="rounded-full border border-Frontend-Rose-300 p-0.5"
-    />
-    </div>
-    </div>
+      <div
+        class="flex items-center justify-between border-b border-Frontend-Rose-100 pb-4"
+      >
+        <div class="flex flex-col gap-2">
+          <h4 class="font-bold">${items[index].name}</h4>
+          <div class="flex gap-2">
+            <p class="font-bold text-Frontend-Red">${itemQuantity}</p>
+            <p class="text-Frontend-Rose-400">@$${items[index].price}</p>
+            <p class="font-bold text-Frontend-Rose-400">${itemQuantity * items[index].price}</p>
+          </div>
+        </div>
+        <button>
+          <img
+            src="assets/images/icon-remove-item.svg"
+            alt=""
+            class="rounded-full border border-Frontend-Rose-300 p-0.5"
+          />
+        </button>
+      </div>
     </div>
     `;
-      if (cartQuantity === 0) {
-        cartItemsList.innerHTML = cartItemsTemplate;
-        cartQuantity++;
-        cartQuantitySpan.textContent = cartQuantity;
-      } else {
-        cartItemsList.insertAdjacentHTML("beforeend", cartItemsTemplate);
-        cartQuantity++;
-        cartQuantitySpan.textContent = cartQuantity;
-      }
-    });
+  if (cartQuantity === 0) {
+    cartItemsList.innerHTML = cartItemsTemplate;
+    cartQuantity++;
+    cartQuantitySpan.textContent = cartQuantity;
+  } else {
+    cartItemsList.insertAdjacentHTML("beforeend", cartItemsTemplate);
+    cartQuantity++;
+    cartQuantitySpan.textContent = cartQuantity;
+  }
 }
 
 function createQuantityControlDiv(quantity) {
