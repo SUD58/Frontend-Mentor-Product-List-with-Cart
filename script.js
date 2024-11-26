@@ -159,14 +159,12 @@ function removeCartItem(itemId) {
     cartItems.splice(itemIndex, 1);
   }
 
-  if (cartItems.length === 0) {
-    cartActive.classList.add("hidden");
-    cartInactive.classList.remove("hidden");
-  }
+  updateCartDisplay();
 }
 
 // Update cart display
 function updateCartDisplay() {
+  cartQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
   cartQuantitySpan.textContent = cartQuantity;
   cartActive.classList.toggle("hidden", cartItems.length === 0);
   cartInactive.classList.toggle("hidden", cartItems.length > 0);
@@ -180,7 +178,7 @@ function updateCartList() {
 // Create individual cart item HTML
 function createCartItemHTML(cartItem) {
   return `
-    <li class="flex items-center justify-between border-b border-Frontend-Rose-100 pb-4">
+    <li data-item-id=${cartItem.id} class="flex items-center justify-between border-b border-Frontend-Rose-100 pb-4">
       <div class="flex flex-col gap-2">
         <h4 class="font-bold">${cartItem.name}</h4>
         <div class="flex gap-2">
@@ -206,3 +204,21 @@ function updateTotalPrice() {
   );
   totalPrice.textContent = `$${totalPriceAmount.toFixed(2)}`;
 }
+
+// Remove cart item using remove button
+cartItemsList.addEventListener("click", (event) => {
+  if (event.target.closest("button")) {
+    const cartItem = event.target.closest("li");
+    const itemId = parseInt(cartItem.dataset.itemId);
+    removeCartItem(itemId);
+    const buttonDiv = document.querySelector(`[data-item-id="${itemId}"]`);
+    buttonDiv.innerHTML = createAddToCartButton();
+    const addToCartButton = buttonDiv.querySelector(".add-to-cart-button");
+    addToCartButton.addEventListener("click", () =>
+      handleAddToCart(itemId, buttonDiv),
+    );
+    updateCartDisplay();
+    updateCartList();
+    updateTotalPrice();
+  }
+});
