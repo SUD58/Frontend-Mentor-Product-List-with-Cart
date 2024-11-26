@@ -9,10 +9,12 @@ const cartQuantitySpan = document.querySelector("#cart-number");
 // State Variables
 let cartQuantity = 0;
 const items = [];
-const cartItems = [];
+const cartItems = JSON.parse(localStorage.getItem("Cart Items")) || [];
 
 // Initialize cart quantity
-cartQuantitySpan.textContent = cartQuantity;
+updateCartDisplay();
+updateCartList();
+updateTotalPrice();
 
 // Fetch items from JSON and render them
 fetch("./data.json")
@@ -44,7 +46,7 @@ function createItemElement(item, index) {
         <img src="${item.image.thumbnail}" class="rounded-2xl">
       </picture>
       <div data-item-id="${index}" class="button-div">
-        ${createAddToCartButton()}
+        ${getButtonHTML(li, index)}
       </div>
     </div>
     <h4 class="text-Frontend-Rose-300">${item.category}</h4>
@@ -52,13 +54,27 @@ function createItemElement(item, index) {
     <p class="font-bold text-Frontend-Red">$${item.price.toFixed(2)}</p>
   `;
 
-  // Attach Add to Cart button listener
+  // Attach button listeners
   const addToCartButton = li.querySelector(".add-to-cart-button");
-  addToCartButton.addEventListener("click", () =>
-    handleAddToCart(index, li.querySelector(".button-div")),
-  );
+  if (addToCartButton) {
+    addToCartButton.addEventListener("click", () =>
+      handleAddToCart(index, li.querySelector(".button-div")),
+    );
+  } else {
+    const buttonDiv = li.querySelector(".button-div");
+    attachQuantityListeners(buttonDiv, index);
+  }
 
   return li;
+}
+
+function getButtonHTML(li, index) {
+  const cartItem = cartItems.find((item) => item.id === index);
+
+  if (cartItem) {
+    return createQuantityControlHTML(cartItem.quantity);
+  }
+  return createAddToCartButton();
 }
 
 // Create Add to Cart button
@@ -95,15 +111,15 @@ function renderQuantityControls(buttonDiv, itemId) {
 }
 
 // Create quantity control HTML
-function createQuantityControlHTML() {
+function createQuantityControlHTML(quantity) {
   return `
-    <div class="added-to-cart-div absolute inset-x-0 -bottom-5 mx-auto flex w-fit items-center justify-between gap-14 rounded-full bg-Frontend-Red px-2 py-2 text-white">
+    <div class="quantity-control-div absolute inset-x-0 -bottom-5 mx-auto flex w-fit items-center justify-between gap-14 rounded-full bg-Frontend-Red px-2 py-2 text-white">
       <button class="decrement-button group flex aspect-square items-center justify-center rounded-full border p-1 hover:bg-white">
         <svg class="aspect-square w-3 fill-white group-hover:fill-Frontend-Red">
           <use href="#decrement-icon"></use>
         </svg>
       </button>
-      <p class="text-xl font-bold">1</p>
+      <p class="text-xl font-bold">${quantity > 1 ? quantity : 1}</p>
       <button class="increment-button group flex aspect-square items-center justify-center rounded-full border p-1 hover:bg-white">
         <svg class="aspect-square w-3 fill-white group-hover:fill-Frontend-Red">
           <use href="#increment-icon"></use>
@@ -173,6 +189,7 @@ function updateCartDisplay() {
 // Update cart list
 function updateCartList() {
   cartItemsList.innerHTML = cartItems.map(createCartItemHTML).join("");
+  localStorage.setItem("Cart Items", JSON.stringify(cartItems));
 }
 
 // Create individual cart item HTML
