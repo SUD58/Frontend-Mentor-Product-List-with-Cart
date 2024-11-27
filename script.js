@@ -285,6 +285,7 @@ newOrderButton.addEventListener("click", () => {
     if (quantityControlDiv) {
       buttonDiv.innerHTML = createAddToCartButton();
       const addToCartButton = buttonDiv.querySelector(".add-to-cart-button");
+      const itemId = buttonDiv.dataset.itemId;
       addToCartButton.addEventListener("click", () =>
         handleAddToCart(itemId, buttonDiv),
       );
