@@ -639,6 +639,10 @@ video {
   flex-grow: 1;
 }
 
+.touch-manipulation{
+  touch-action: manipulation;
+}
+
 .auto-rows-auto{
   grid-auto-rows: auto;
 }
