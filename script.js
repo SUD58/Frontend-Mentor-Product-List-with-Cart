@@ -46,11 +46,11 @@ function createItemElement(item, index) {
 
   li.innerHTML = `
   <div class="relative mb-8">
-  <picture class="rounded-2xl">
-  <source srcset="${item.image.mobile}">
-  <source srcset="${item.image.tablet}" media="(min-width: 1024px)">
-  <source srcset="${item.image.desktop}" media="(min-width: 1280px)">
-  <img src="${item.image.thumbnail}" class="rounded-2xl">
+  <picture>
+    <source srcset="${item.image.mobile}">
+    <source srcset="${item.image.tablet}" media="(min-width: 1024px)">
+    <source srcset="${item.image.desktop}" media="(min-width: 1280px)">
+    <img src="${item.image.thumbnail}" class="rounded-2xl">
   </picture>
   <div data-item-id="${index}" class="button-div">
   ${getButtonHTML(li, index)}
@@ -65,11 +65,17 @@ function createItemElement(item, index) {
   const addToCartButton = li.querySelector(".add-to-cart-button");
   if (addToCartButton) {
     addToCartButton.addEventListener("click", () =>
-      handleAddToCart(index, li.querySelector(".button-div")),
+      handleAddToCart(
+        index,
+        li.querySelector(".button-div"),
+        li.querySelector("img"),
+      ),
     );
   } else {
     const buttonDiv = li.querySelector(".button-div");
-    attachQuantityListeners(buttonDiv, index);
+    const productImg = li.querySelector("img");
+    productImg.classList.add("border-2", "border-Frontend-Red");
+    attachQuantityListeners(buttonDiv, index, productImg);
   }
 
   return li;
@@ -79,7 +85,6 @@ function getButtonHTML(li, index) {
   const cartItem = cartItems.find((item) => parseFloat(item.id) === index);
 
   if (cartItem) {
-    console.log(cartItem.quantity);
     return createQuantityControlHTML(cartItem.quantity);
   }
   return createAddToCartButton();
@@ -98,7 +103,7 @@ function createAddToCartButton() {
 }
 
 // Handle Add to Cart logic
-function handleAddToCart(index, buttonDiv) {
+function handleAddToCart(index, buttonDiv, productImg) {
   const item = items[index];
 
   // Update cart item
@@ -107,15 +112,17 @@ function handleAddToCart(index, buttonDiv) {
   updateCartDisplay();
 
   // Replace Add to Cart button with quantity controls
-  renderQuantityControls(buttonDiv, index);
+  renderQuantityControls(buttonDiv, index, productImg);
   updateCartList();
   updateTotalPrice();
 }
 
 // Render quantity controls
-function renderQuantityControls(buttonDiv, itemId) {
+function renderQuantityControls(buttonDiv, itemId, productImg) {
   buttonDiv.innerHTML = createQuantityControlHTML(1);
-  attachQuantityListeners(buttonDiv, itemId);
+  productImg.classList.add("border-2", "border-Frontend-Red");
+
+  attachQuantityListeners(buttonDiv, itemId, productImg);
 }
 
 // Create quantity control HTML
@@ -138,21 +145,27 @@ function createQuantityControlHTML(quantity) {
 }
 
 // Attach quantity control listeners
-function attachQuantityListeners(buttonDiv, itemId) {
+function attachQuantityListeners(buttonDiv, itemId, productImg) {
   const incrementButton = buttonDiv.querySelector(".increment-button");
   const decrementButton = buttonDiv.querySelector(".decrement-button");
   const quantityDisplay = buttonDiv.querySelector("p");
 
   incrementButton.addEventListener("click", () =>
-    handleQuantityChange(itemId, 1, buttonDiv, quantityDisplay),
+    handleQuantityChange(itemId, 1, buttonDiv, quantityDisplay, productImg),
   );
   decrementButton.addEventListener("click", () =>
-    handleQuantityChange(itemId, -1, buttonDiv, quantityDisplay),
+    handleQuantityChange(itemId, -1, buttonDiv, quantityDisplay, productImg),
   );
 }
 
 // Handle quantity change
-function handleQuantityChange(itemId, change, buttonDiv, quantityDisplay) {
+function handleQuantityChange(
+  itemId,
+  change,
+  buttonDiv,
+  quantityDisplay,
+  productImg,
+) {
   const cartItem = cartItems.find(
     (item) => parseFloat(item.id) === parseFloat(itemId),
   );
@@ -167,8 +180,9 @@ function handleQuantityChange(itemId, change, buttonDiv, quantityDisplay) {
     buttonDiv.innerHTML = createAddToCartButton();
     const addToCartButton = buttonDiv.querySelector(".add-to-cart-button");
     addToCartButton.addEventListener("click", () =>
-      handleAddToCart(itemId, buttonDiv),
+      handleAddToCart(itemId, buttonDiv, productImg),
     );
+    productImg.classList.remove("border-2", "border-Frontend-Red");
   } else {
     quantityDisplay.textContent = cartItem.quantity;
   }
@@ -256,9 +270,11 @@ cartItemsList.addEventListener("click", (event) => {
     removeCartItem(itemId);
     const buttonDiv = document.querySelector(`[data-item-id="${itemId}"]`);
     buttonDiv.innerHTML = createAddToCartButton();
+    const productImg = buttonDiv.parentNode.querySelector("img");
+    productImg.classList.remove("border-2", "border-Frontend-Red");
     const addToCartButton = buttonDiv.querySelector(".add-to-cart-button");
     addToCartButton.addEventListener("click", () =>
-      handleAddToCart(itemId, buttonDiv),
+      handleAddToCart(itemId, buttonDiv, productImg),
     );
     updateCartDisplay();
     updateCartList();
@@ -289,10 +305,12 @@ newOrderButton.addEventListener("click", () => {
     const quantityControlDiv = buttonDiv.querySelector(".quantity-control-div");
     if (quantityControlDiv) {
       buttonDiv.innerHTML = createAddToCartButton();
+      const productImg = buttonDiv.parentNode.querySelector("img");
+      productImg.classList.remove("border-2", "border-Frontend-Red");
       const addToCartButton = buttonDiv.querySelector(".add-to-cart-button");
       const itemId = buttonDiv.dataset.itemId;
       addToCartButton.addEventListener("click", () =>
-        handleAddToCart(itemId, buttonDiv),
+        handleAddToCart(itemId, buttonDiv, productImg),
       );
     }
   });
