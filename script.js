@@ -76,9 +76,10 @@ function createItemElement(item, index) {
 }
 
 function getButtonHTML(li, index) {
-  const cartItem = cartItems.find((item) => item.id === index);
+  const cartItem = cartItems.find((item) => parseFloat(item.id) === index);
 
   if (cartItem) {
+    console.log(cartItem.quantity);
     return createQuantityControlHTML(cartItem.quantity);
   }
   return createAddToCartButton();
@@ -113,7 +114,7 @@ function handleAddToCart(index, buttonDiv) {
 
 // Render quantity controls
 function renderQuantityControls(buttonDiv, itemId) {
-  buttonDiv.innerHTML = createQuantityControlHTML();
+  buttonDiv.innerHTML = createQuantityControlHTML(1);
   attachQuantityListeners(buttonDiv, itemId);
 }
 
@@ -152,7 +153,9 @@ function attachQuantityListeners(buttonDiv, itemId) {
 
 // Handle quantity change
 function handleQuantityChange(itemId, change, buttonDiv, quantityDisplay) {
-  const cartItem = cartItems.find((item) => item.id === itemId);
+  const cartItem = cartItems.find(
+    (item) => parseFloat(item.id) === parseFloat(itemId),
+  );
   if (!cartItem) return;
 
   cartItem.quantity += change;
@@ -177,7 +180,9 @@ function handleQuantityChange(itemId, change, buttonDiv, quantityDisplay) {
 
 // Remove cart item
 function removeCartItem(itemId) {
-  const itemIndex = cartItems.findIndex((item) => item.id === itemId);
+  const itemIndex = cartItems.findIndex(
+    (item) => parseFloat(item.id) === itemId,
+  );
   if (itemIndex > -1) {
     cartItems.splice(itemIndex, 1);
   }
