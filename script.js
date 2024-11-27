@@ -2,7 +2,7 @@
 const itemsList = document.querySelector("#items-list");
 const cartActive = document.querySelector("#cart-active");
 const cartInactive = document.querySelector("#cart-inactive");
-const cartItemsList = document.querySelector("#cart-items");
+const cartItemsList = document.querySelector("#cart-items-list");
 const totalPrice = document.querySelector("#total-price");
 const cartQuantitySpan = document.querySelector("#cart-number");
 const confirmOrderButton = document.querySelector("#confirm-order-button");
@@ -189,20 +189,21 @@ function removeCartItem(itemId) {
 function updateCartDisplay() {
   cartQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
   cartQuantitySpan.textContent = cartQuantity;
-  cartActive.classList.toggle("hidden", cartItems.length === 0);
-  cartInactive.classList.toggle("hidden", cartItems.length > 0);
+  cartActive.classList.toggle("hidden", cartQuantity === 0);
+  cartInactive.classList.toggle("hidden", cartQuantity > 0);
 }
 
 // Update cart list
 function updateCartList() {
   cartItemsList.innerHTML = cartItems.map(createCartItemHTML).join("");
   localStorage.setItem("Cart Items", JSON.stringify(cartItems));
+  setCartListHeight();
 }
 
 // Create individual cart item HTML
 function createCartItemHTML(cartItem) {
   return `
-  <li data-item-id=${cartItem.id} class="flex items-center justify-between border-b border-Frontend-Rose-100 pb-4">
+  <li data-item-id=${cartItem.id} class="cart-item flex items-center justify-between border-b border-Frontend-Rose-100 pb-4">
   <div class="flex flex-col gap-2">
   <h4 class="font-bold">${cartItem.name}</h4>
   <div class="flex gap-2">
@@ -213,11 +214,23 @@ function createCartItemHTML(cartItem) {
   </div>
   <button class="remove-item-button group flex aspect-square items-center justify-center rounded-full border border-Frontend-Rose-300 p-0.5 hover:border-Frontend-Rose-500">
   <svg class="aspect-square w-3 fill-Frontend-Rose-300 group-hover:fill-Frontend-Rose-500">
-          <use href="#remove-item-icon"></use>
-          </svg>
-          </button>
+  <use href="#remove-item-icon"></use>
+  </svg>
+  </button>
           </li>
           `;
+}
+
+function setCartListHeight() {
+  const cartItemDivs = Array.from(document.querySelectorAll(".cart-item"));
+  const cartItemsListHeight = cartItemDivs.reduce(
+    (total, cartItemDiv) => total + cartItemDiv.offsetHeight,
+    0,
+  );
+  if (cartItemDivs) {
+    const cartItemHeight = cartItemsListHeight / cartItems.length;
+    cartItemsList.style.maxHeight = `${cartItemHeight * 4}px`;
+  }
 }
 
 // Update total price
