@@ -264,6 +264,17 @@ cartItemsList.addEventListener("click", (event) => {
 confirmOrderButton.addEventListener("click", () => {
   orderConfirmationModal.showModal();
   orderItemsList.innerHTML = cartItems.map(createOrderItemHTML).join("");
+  const orderItems = Array.from(
+    orderConfirmationModal.querySelectorAll(".order-item"),
+  );
+  const orderItemsListHeight = orderItems.reduce(
+    (total, orderItem) => total + orderItem.offsetHeight,
+    0,
+  );
+  if (orderItems) {
+    const orderItemHeight = orderItemsListHeight / orderItems.length;
+    orderItemsList.style.maxHeight = `${orderItemHeight * 4}px`;
+  }
 });
 
 newOrderButton.addEventListener("click", () => {
@@ -289,7 +300,7 @@ function createOrderItemHTML(cartItem) {
   return `
     <li
       data-item-id="${cartItem.id}"
-      class="flex items-center justify-between border-b border-Frontend-Rose-100 pb-4"
+      class="order-item flex items-center justify-between border-b border-Frontend-Rose-100 pb-4"
     >
       <div class="flex items-center gap-2">
         <img
