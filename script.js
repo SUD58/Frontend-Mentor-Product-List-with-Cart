@@ -267,6 +267,21 @@ confirmOrderButton.addEventListener("click", () => {
 });
 
 newOrderButton.addEventListener("click", () => {
+  cartItems.length = 0;
+  const buttonDivs = document.querySelectorAll(".button-div");
+  buttonDivs.forEach((buttonDiv) => {
+    const quantityControlDiv = buttonDiv.querySelector(".quantity-control-div");
+    if (quantityControlDiv) {
+      buttonDiv.innerHTML = createAddToCartButton();
+      const addToCartButton = buttonDiv.querySelector(".add-to-cart-button");
+      addToCartButton.addEventListener("click", () =>
+        handleAddToCart(itemId, buttonDiv),
+      );
+    }
+  });
+  updateCartDisplay();
+  updateCartList();
+  updateTotalPrice();
   orderConfirmationModal.close();
 });
 
